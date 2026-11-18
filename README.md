@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crimson Claws
 
-## Getting Started
+Demo website for the Crimson Claws, a fictional basketball club playing at the Kiln on Harbour Road. Built with Next.js, React Three Fiber and Tailwind CSS.
 
-First, run the development server:
+## What's in it
+
+- **Home**: the live 3D home court, the next home game, the roster, Rex the mascot and the club kit.
+- **Play** (`/play`): a 3D half court in the browser. Drag and flick to shoot from 11 spots including half court, with day, dawn, dusk and night lighting, crowd sound, recorded commentary and a 60-second challenge.
+- **Club** (`/club`): the club's history and game-night traditions.
+- **Roster, Schedule, Media**: players, fixtures and photos.
+- **Tickets** (`/tickets`): pick a home game, seat tier and quantity.
+- **Shop** (`/shop`): balls, jerseys, shorts, caps and hoodies with colour and size choices.
+- **Bag and checkout** (`/cart`, `/checkout`): one bag for kit and tickets, kept in the browser. Checkout is a demo: no payment is taken.
+
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+Every page is prerendered as static content, so it deploys to Vercel with no extra configuration.
 
-To learn more about Next.js, take a look at the following resources:
+## Project layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                 pages (App Router), global and intro styles, favicon
+components/game/     the 3D court, ball physics and game HUD
+components/mascot/   Rex, the 3D mascot
+components/site/     navbar, footer, cart, checkout, tickets, shop sections
+components/ui/       pasted UI components (product hero, ticket, footer)
+lib/                 game state, cart, tickets, audio and lighting
+data/content.ts      roster, schedule, season figures and gallery
+public/audio/        commentary clips
+public/brand/        logo mark and footer cut-out
+public/media/        photos for the media and club pages
+public/roster/       player posters
+public/shop/         product cut-outs
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Credits
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Footer photograph by MarcoCrupi via Wikimedia Commons (CC BY-SA 3.0). Crimson Claws, its players and its history are fictional.

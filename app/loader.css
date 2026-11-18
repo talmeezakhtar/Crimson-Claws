@@ -1,0 +1,64 @@
+/* ---- first-visit intro (components/site/LoadingScreen) ---- */
+.cc-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--color-crimson);
+  color: var(--color-cream);
+  clip-path: inset(0 0 0 0);
+  /* the panel lifts away like a curtain once the name has landed */
+  animation: cc-wipe 0.8s cubic-bezier(0.76, 0, 0.24, 1) 2.95s forwards;
+}
+html[data-intro="seen"] .cc-loader { display: none; }
+html[data-intro="playing"] { overflow: hidden; }
+
+.cc-stage { display: grid; place-items: center; }
+.cc-word {
+  grid-area: 1 / 1;
+  display: flex;
+  white-space: nowrap;
+  font-family: var(--font-jacquard), serif;
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  line-height: 1.05;
+}
+.cc-mask { display: block; overflow: hidden; padding: 0 0.01em; }
+.cc-letter {
+  display: block;
+  transform: translateY(110%);
+  animation: cc-swap 0.82s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+.cc-hollow { color: transparent; -webkit-text-stroke: 1.5px var(--color-cream); }
+
+.cc-final { color: #d9a441; animation: cc-swell 1s cubic-bezier(0.65, 0, 0.35, 1) 2.55s both; }
+.cc-final .cc-letter { animation-name: cc-land; animation-duration: 0.6s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+.cc-final .cc-hollow { -webkit-text-stroke-color: #d9a441; }
+
+@keyframes cc-swap {
+  0% { transform: translateY(110%); }
+  32%, 66% { transform: translateY(0); }
+  100% { transform: translateY(-110%); }
+}
+@keyframes cc-land {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+@keyframes cc-swell {
+  from { transform: scale(1); }
+  to { transform: scale(1.35); }
+}
+@keyframes cc-wipe {
+  to { clip-path: inset(0 0 100% 0); visibility: hidden; }
+}
+
+/* the page's own entrance waits for the curtain */
+html[data-intro="playing"] [data-enter] > * { animation-delay: 3.25s; }
+html[data-intro="playing"] [data-enter] > *:nth-child(2) { animation-delay: 3.33s; }
+html[data-intro="playing"] [data-enter] > *:nth-child(3) { animation-delay: 3.41s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-loader { display: none; }
+  html[data-intro="playing"] { overflow: auto; }
+  html[data-intro="playing"] [data-enter] > * { animation-delay: 0s !important; }
+}

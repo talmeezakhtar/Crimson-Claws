@@ -1,0 +1,44 @@
+/* Product heroes in the shop (components/ui/sneaker-product-hero) in club colours and type */
+.claws-shop {
+  --color-foreground: var(--color-ink);
+  --color-background: var(--color-cream);
+  --color-muted-foreground: var(--color-muted);
+}
+.claws-shop .snp-title,
+.claws-shop .snp-word {
+  font-family: var(--font-jacquard), serif;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.claws-shop .snp-title { font-size: max(30px, 3.4cqw); line-height: 1; }
+.claws-shop .snp-word { font-size: 8cqw; }
+.claws-shop .snp-price { font-family: var(--font-jetbrains), monospace; color: var(--color-crimson); }
+.claws-shop .snp-cta { border-radius: 10px; background: var(--color-crimson); color: var(--color-cream); transition: transform .16s, background .2s; }
+.claws-shop .snp-cta:not(:disabled):hover { background: var(--color-crimson-deep); transform: translateY(-2px); }
+.claws-shop .snp-eyebrow { display: none; }
+.claws-shop .snp-title { margin-top: 0; }
+/* one section on the night ground breaks the run of cream */
+.claws-shop .snp-dark {
+  --color-foreground: var(--color-cream);
+  --color-background: var(--color-night);
+  --color-muted-foreground: var(--color-night-muted);
+}
+.claws-shop .snp-dark .snp-price { color: #d9a441; }
+/* our photos are squarer than a side-on shoe: give them a taller frame and drop the floor with them */
+@container (min-width: 761px) {
+  .claws-shop .snp-shoe { aspect-ratio: 4 / 3; width: 88%; }
+  .claws-shop .snp-shoe.snp-reflect { transform-origin: 50% 100%; }
+  .claws-shop .snp-floor { translate: 0 10.5cqw; }
+  .claws-shop .snp-tall .snp-stage { max-height: 48cqw; min-height: 40cqw; }
+  .claws-shop .snp-tall .snp-shoe { aspect-ratio: 4 / 5; width: 66%; }
+  .claws-shop .snp-tall .snp-floor { translate: 0 15cqw; }
+  /* every other section mirrors: buy column left, story right */
+  .claws-shop .snp-flip .snp-body { grid-template-columns: 17cqw minmax(0, 1fr) 20cqw; padding: 4cqw 7.3cqw 4cqw 9cqw; }
+  .claws-shop .snp-flip .snp-buy { order: 1; }
+  .claws-shop .snp-flip .snp-stage { order: 2; }
+  .claws-shop .snp-flip .snp-info { order: 3; }
+}
+
+/* size buttons stay round: the narrow buy column was squeezing five of them into ovals */
+.claws-shop .snp-sizes { flex-wrap: wrap; gap: 10px; }
+.claws-shop .snp-size { flex: none; aspect-ratio: 1; height: auto; }

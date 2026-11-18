@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local only: source art and design-tool caches
+/design-assets
+/.taste-skill
+/.impeccable
