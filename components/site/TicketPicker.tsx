@@ -99,6 +99,7 @@ export default function TicketPicker() {
           <button type="button" onClick={addToBag} className="btn btn-primary w-full">
             Add {qty} {qty === 1 ? "ticket" : "tickets"} to bag
           </button>
+          <p className="mt-3 text-sm text-muted lg:hidden">Tickets arrive by email and scan at the Kiln doors from 6:30 pm.</p>
           <p role="status" className="mt-3 min-h-6 text-sm">
             {added && (
               <>
@@ -112,11 +113,12 @@ export default function TicketPicker() {
         </div>
       </div>
 
-      <div className="lg:sticky lg:top-28 lg:self-start">
-        <div className="grid place-items-center rounded-[28px] bg-night px-5 py-12 sm:px-10 sm:py-16">
+      {/* On phones the ticket comes first and stays pinned under the navbar, so each choice below updates in view. */}
+      <div className="sticky top-16 z-20 order-first -mx-4 bg-cream/90 px-4 py-3 backdrop-blur-md sm:-mx-8 sm:px-8 lg:top-28 lg:order-none lg:mx-0 lg:self-start lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
+        <div className="grid place-items-center rounded-[22px] bg-night px-4 py-4 sm:rounded-[28px] sm:px-10 sm:py-10 lg:py-16">
           <ClawsTicket game={game} tier={tier} qty={qty} />
         </div>
-        <p className="mt-3 text-sm text-muted">Tickets arrive by email and scan at the Kiln doors from 6:30 pm.</p>
+        <p className="mt-3 hidden text-sm text-muted lg:block">Tickets arrive by email and scan at the Kiln doors from 6:30 pm.</p>
       </div>
     </div>
   );

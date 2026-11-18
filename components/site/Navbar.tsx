@@ -29,6 +29,10 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   useEffect(() => {
@@ -39,14 +43,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
 
-  const light = overlay && !scrolled && !open;
+  // over the court, and while the menu is open, the bar is cream on dark
+  const light = open || (overlay && !scrolled);
 
   return (
+    <>
     <header
       className={`${overlay ? "fixed" : "sticky"} inset-x-0 top-0 z-40 transition-colors duration-300 ${
-        light
-          ? "on-night bg-gradient-to-b from-night/70 to-transparent text-cream"
-          : "border-b border-sand/70 bg-cream/90 text-ink backdrop-blur-md"
+        open
+          ? "on-night border-b border-transparent bg-transparent text-cream"
+          : light
+            ? "on-night bg-gradient-to-b from-night/70 to-transparent text-cream"
+            : "border-b border-sand/70 bg-cream/90 text-ink backdrop-blur-md"
       }`}
     >
       <nav className="wrap mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto] items-center px-4 sm:px-8 lg:grid-cols-[1fr_auto_1fr]">
@@ -109,26 +117,30 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {open && (
-        <div className="fixed inset-x-0 bottom-0 top-16 flex flex-col overflow-y-auto bg-cream px-4 pb-8 pt-4 lg:hidden">
-          <ul className="flex-1">
-            {[{ href: "/", label: "Home" }, ...LINKS].map((l) => (
-              <li key={l.href} className="border-b border-sand">
-                <Link
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className={`display block py-4 text-4xl ${pathname === l.href ? "text-crimson" : "text-ink"}`}
-                >
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link href="/play" onClick={() => setOpen(false)} className="btn btn-primary w-full">
-            Play the court
-          </Link>
-        </div>
-      )}
     </header>
+
+    {/* Outside the header on purpose: the header's backdrop-filter would make a fixed child size itself to the header. */}
+    {open && (
+      <div className="on-night fixed inset-0 z-30 flex flex-col overflow-y-auto bg-night/80 px-4 pb-8 pt-20 text-cream backdrop-blur-xl lg:hidden">
+        <ul className="flex-1">
+          {[{ href: "/", label: "Home" }, ...LINKS].map((l) => (
+            <li key={l.href} className="border-b border-cream/15">
+              <Link
+                href={l.href}
+                onClick={() => setOpen(false)}
+                aria-current={pathname === l.href ? "page" : undefined}
+                className={`display block py-4 text-4xl ${pathname === l.href ? "text-[#d9a441]" : "text-cream"}`}
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <Link href="/play" onClick={() => setOpen(false)} className="btn btn-light mt-6 w-full">
+          Play the court
+        </Link>
+      </div>
+    )}
+    </>
   );
 }
